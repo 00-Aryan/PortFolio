@@ -22,7 +22,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
         >
-          From bakery analytics to NLP pipelines — I build with data.
+          From web analytics and Kaggle competitions to job automation and clinical NLP — I build end-to-end data solutions.
         </motion.p>
 
         <motion.div
