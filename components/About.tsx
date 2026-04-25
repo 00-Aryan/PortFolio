@@ -17,7 +17,7 @@ export default function About() {
 
           <div className="space-y-6 mb-8">
             <p className="text-lg text-gray-700 leading-relaxed">
-              I'm a data scientist with a passion for building end-to-end data solutions. My journey began with a web analytics application for a local bakery, progressed through Kaggle competitions, evolved with a job scraping and automation pipeline, and now focuses on NLP pipelines for clinical information extraction.
+              I'm a data scientist with a passion for building end-to-end data solutions. My journey began with a web analytics application for a local bakery, progressed through Kaggle competitions, evolved with a job scraping and automation pipeline, and now focuses on NLP pipelines for information extraction.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
               I specialize in creating end-to-end machine learning pipelines, from data collection and preprocessing to model deployment. Currently, I'm focusing on NLP applications and building robust data infrastructure that scales.
