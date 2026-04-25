@@ -17,13 +17,13 @@ export default function About() {
 
           <div className="space-y-6 mb-8">
             <p className="text-lg text-gray-700 leading-relaxed">
-              I'm a final-year B.S. Data Science student at IIT Madras (graduating September 2026) with a passion for building practical ML solutions. My journey started with analytics for a local bakery and has evolved into developing sophisticated NLP pipelines and data systems.
+              I'm a data scientist with a passion for building end-to-end data solutions. My journey began with a web analytics application for a local bakery, progressed through Kaggle competitions, evolved with a job scraping and automation pipeline, and now focuses on NLP pipelines for clinical information extraction.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
               I specialize in creating end-to-end machine learning pipelines, from data collection and preprocessing to model deployment. Currently, I'm focusing on NLP applications and building robust data infrastructure that scales.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              I'm actively seeking Data Science and ML roles in Gurgaon/Delhi, where I can contribute to impactful projects and continue growing as a data professional.
+              I'm actively seeking Data Science and ML roles where I can contribute to impactful projects and continue growing as a data professional.
             </p>
           </div>
 
