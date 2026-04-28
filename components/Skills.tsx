@@ -1,85 +1,114 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { FrankyCharacter } from './characters'
+import { sectionStory } from '@/data/story'
 
 const skillCategories = [
   {
-    title: 'NLP & Language Models',
+    title: 'NLP & GenAI',
     skills: [
-      { name: 'spaCy', level: 'Advanced' },
-      { name: 'DistilBERT', level: 'Intermediate' },
-      { name: 'BPE Tokenizer', level: 'Advanced' },
-      { name: 'scispaCy', level: 'Intermediate' },
+      { name: 'Transformers', level: 'Advanced' },
+      { name: 'SBERT / Embeddings', level: 'Advanced' },
+      { name: 'spaCy / scispaCy', level: 'Advanced' },
+      { name: 'LLM / RAG Pipelines', level: 'Intermediate' },
+      { name: 'LangChain / FAISS', level: 'Intermediate' },
+      { name: 'DistilBERT', level: 'Advanced' },
     ],
   },
   {
     title: 'ML Engineering',
     skills: [
+      { name: 'LightGBM / XGBoost', level: 'Advanced' },
+      { name: 'Stacking Ensembles', level: 'Advanced' },
       { name: 'scikit-learn', level: 'Advanced' },
-      { name: 'PyTorch', level: 'Intermediate' },
-      { name: 'XGBoost', level: 'Advanced' },
-      { name: 'Framer Motion', level: 'Intermediate' },
+      { name: 'Optuna (Tuning)', level: 'Advanced' },
+      { name: 'Feature Engineering', level: 'Advanced' },
+      { name: 'Model Evaluation', level: 'Advanced' },
     ],
   },
   {
     title: 'Data & Analytics',
     skills: [
-      { name: 'pandas', level: 'Advanced' },
+      { name: 'pandas / NumPy', level: 'Advanced' },
       { name: 'SQL', level: 'Intermediate' },
-      { name: 'NumPy', level: 'Advanced' },
-      { name: 'Matplotlib', level: 'Advanced' },
+      { name: 'EDA', level: 'Advanced' },
+      { name: 'SHAP / Interpretation', level: 'Intermediate' },
+      { name: 'Statistical Analysis', level: 'Advanced' },
+      { name: 'Collaborative Filtering', level: 'Advanced' },
     ],
   },
   {
-    title: 'Dev & Tools',
+    title: 'Dev & Deployment',
     skills: [
       { name: 'Python', level: 'Advanced' },
+      { name: 'FastAPI / REST APIs', level: 'Intermediate' },
+      { name: 'GitHub Actions', level: 'Intermediate' },
       { name: 'Git', level: 'Advanced' },
-      { name: 'Next.js', level: 'Intermediate' },
-      { name: 'Docker', level: 'Beginner' },
+      { name: 'Docker (Learning)', level: 'Beginner' },
+      { name: 'Apify (Scraping)', level: 'Advanced' },
     ],
   },
 ]
 
-const getLevelWidth = (level: string): number => {
+const getLevelStyles = (level: string) => {
   switch (level) {
     case 'Advanced':
-      return 90
+      return {
+        bg: 'bg-nika-gold',
+        text: 'text-nika-bg',
+        border: 'border-nika-gold',
+      }
     case 'Intermediate':
-      return 60
+      return {
+        bg: 'bg-nika-haki',
+        text: 'text-nika-haki-text',
+        border: 'border-nika-haki-border',
+      }
     case 'Beginner':
-      return 30
+      return {
+        bg: 'bg-nika-white/10',
+        text: 'text-nika-white/40',
+        border: 'border-nika-white/20',
+      }
     default:
-      return 50
-  }
-}
-
-const getLevelColor = (level: string): string => {
-  switch (level) {
-    case 'Advanced':
-      return 'text-nika-gold'
-    case 'Intermediate':
-      return 'text-nika-haki-text'
-    case 'Beginner':
-      return 'text-nika-white/40'
-    default:
-      return 'text-nika-white/50'
+      return {
+        bg: 'bg-nika-white/10',
+        text: 'text-nika-white/50',
+        border: 'border-nika-white/20',
+      }
   }
 }
 
 export default function Skills() {
+  const story = sectionStory.skills
+
   return (
-    <section id="skills" className="py-20 px-8">
+    <section id="skills" className="py-20 px-8 scroll-mt-16">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="mb-12"
+          className="mb-12 flex items-center gap-4"
         >
-          <h2 className="text-3xl font-bold text-nika-white mb-2">Skills</h2>
-          <p className="text-nika-white/60 text-lg">Technologies I work with</p>
+          <div>
+            <h2 className="text-3xl font-bold text-nika-white mb-2">Skills</h2>
+            <p className="text-nika-white/60 text-lg">{story.character} · {story.role}</p>
+            <p className="text-nika-white/50 text-sm mt-2 max-w-2xl">
+              {story.title}. {story.blurb}
+            </p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 400, damping: 15 }}
+          >
+            <FrankyCharacter />
+          </motion.div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -101,34 +130,35 @@ export default function Skills() {
                 {category.title}
               </h3>
 
-              <div className="space-y-4">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between mb-1">
+              <div className="grid grid-cols-2 gap-3">
+                {category.skills.map((skill, skillIndex) => {
+                  const levelStyles = getLevelStyles(skill.level)
+                  return (
+                    <motion.div
+                      key={skill.name}
+                      className="flex flex-col gap-2"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        delay: skillIndex * 0.05,
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 20,
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                    >
                       <span className="font-body text-[13px] text-nika-white">
                         {skill.name}
                       </span>
-                      <span className={`font-body text-[11px] ${getLevelColor(skill.level)}`}>
+                      <span
+                        className={`font-outfit text-[10px] px-2 py-0.5 rounded-full border ${levelStyles.bg} ${levelStyles.text} ${levelStyles.border} inline-block w-fit`}
+                      >
                         {skill.level}
                       </span>
-                    </div>
-                    <div className="h-1 bg-nika-white/10 rounded-full">
-                      <motion.div
-                        className="h-full bg-gradient-to-r from-nika-gold to-nika-gold/50 rounded-full"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${getLevelWidth(skill.level)}%` }}
-                        viewport={{ once: true }}
-                        transition={{
-                          duration: 1.2,
-                          delay: skillIndex * 0.1,
-                          type: 'spring',
-                          stiffness: 80,
-                          damping: 20,
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
+                    </motion.div>
+                  )
+                })}
               </div>
             </motion.div>
           ))}

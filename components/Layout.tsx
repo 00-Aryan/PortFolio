@@ -1,7 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  NamiCharacter,
+  RobinCharacter,
+  ChopperCharacter,
+  BrookCharacter,
+  JinbeCharacter,
+} from './characters'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -9,6 +16,8 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [activeSection, setActiveSection] = useState('hero')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const sections = ['hero', 'projects', 'research', 'skills', 'contact']
@@ -32,12 +41,22 @@ export default function Layout({ children }: LayoutProps) {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const navItems = [
-    { id: 'hero', href: '#hero', icon: 'grid' },
-    { id: 'projects', href: '#projects', icon: 'code' },
-    { id: 'research', href: '#research', icon: 'book' },
-    { id: 'skills', href: '#skills', icon: 'layers' },
-    { id: 'contact', href: '#contact', icon: 'mail' },
+    { id: 'hero', href: '#hero', icon: 'grid', label: 'Home' },
+    { id: 'projects', href: '#projects', icon: 'code', label: 'Projects' },
+    { id: 'research', href: '#research', icon: 'book', label: 'Research' },
+    { id: 'skills', href: '#skills', icon: 'layers', label: 'Skills' },
+    { id: 'contact', href: '#contact', icon: 'mail', label: 'Contact' },
   ]
 
   const getIcon = (icon: string) => {
@@ -85,15 +104,55 @@ export default function Layout({ children }: LayoutProps) {
     }
   }
 
+  const handleNavClick = (href: string) => {
+    setIsMobileMenuOpen(false)
+  }
+
   return (
     <div className="flex min-h-screen bg-nika-bg">
-      <aside className="fixed left-0 top-0 h-screen w-16 bg-[rgba(13,13,13,0.85)] backdrop-blur-[20px] border-r border-nika-haki-border flex flex-col items-center justify-between py-6 z-50">
+      {/* Mobile Hamburger Button */}
+      {isMobile && (
+        <motion.button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="fixed top-4 left-4 z-50 w-10 h-10 rounded-full bg-nika-gold text-nika-bg flex items-center justify-center shadow-lg"
+          whileTap={{ scale: 0.9 }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            {isMobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </motion.button>
+      )}
+
+      {/* Mobile Backdrop */}
+      <AnimatePresence>
+        {isMobile && isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed left-0 top-0 h-screen w-16 bg-[rgba(13,13,13,0.85)] backdrop-blur-[20px] border-r border-nika-haki-border flex flex-col items-center justify-between py-6 z-50 transition-transform duration-300 ${
+          isMobile ? (isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'
+        }`}
+      >
         <div className="flex flex-col items-center gap-6">
           <motion.a
             href="#hero"
             className="relative"
             whileHover={{ scale: 1.25 }}
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+            onClick={() => handleNavClick('#hero')}
           >
             <motion.div
               animate={{ rotate: 360 }}
@@ -131,6 +190,7 @@ export default function Layout({ children }: LayoutProps) {
               <div key={item.id} className="relative group">
                 <motion.a
                   href={item.href}
+                  onClick={() => handleNavClick(item.href)}
                   className={`w-11 h-11 rounded-[20px] flex items-center justify-center transition-colors ${
                     activeSection === item.id
                       ? 'border-l-2 border-nika-gold bg-[rgba(255,215,0,0.12)]'
@@ -148,7 +208,7 @@ export default function Layout({ children }: LayoutProps) {
                   className="absolute left-[72px] top-1/2 -translate-y-1/2 bg-nika-gold text-nika-bg font-outfit text-[11px] px-3 py-1 rounded-full whitespace-nowrap pointer-events-none"
                   transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                 >
-                  {item.id.charAt(0).toUpperCase() + item.id.slice(1)}
+                  {item.label}
                 </motion.div>
               </div>
             ))}
@@ -156,6 +216,34 @@ export default function Layout({ children }: LayoutProps) {
         </div>
 
         <div className="relative group">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="mb-4"
+          >
+            <p className="text-[9px] uppercase tracking-[0.18em] text-nika-haki-text text-center mb-2">
+              Crew
+            </p>
+            <div className="grid grid-cols-2 gap-1.5 rounded-2xl border border-nika-haki-border bg-white/[0.03] p-1.5">
+              <div className="scale-[0.42] origin-center">
+                <NamiCharacter />
+              </div>
+              <div className="scale-[0.42] origin-center">
+                <RobinCharacter />
+              </div>
+              <div className="scale-[0.42] origin-center">
+                <ChopperCharacter />
+              </div>
+              <div className="scale-[0.42] origin-center">
+                <BrookCharacter />
+              </div>
+              <div className="col-span-2 flex justify-center scale-[0.42] origin-center">
+                <JinbeCharacter />
+              </div>
+            </div>
+          </motion.div>
+
           <motion.div
             animate={{ rotate: [-15, 15, -15] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}

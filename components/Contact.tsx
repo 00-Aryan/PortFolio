@@ -1,18 +1,33 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { SanjiCharacter } from './characters'
+import { sectionStory } from '@/data/story'
 
 export default function Contact() {
+  const story = sectionStory.contact
+
   return (
-    <section id="contact" className="py-20 px-8">
+    <section id="contact" className="py-20 px-8 scroll-mt-16">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ type: 'spring', stiffness: 200, damping: 14 }}
           viewport={{ once: true }}
-          className="glass-card max-w-2xl mx-auto text-center p-12"
+          className="glass-card max-w-2xl mx-auto text-center p-12 relative"
         >
+          {/* Sanji character */}
+          <motion.div
+            className="absolute -top-8 -right-8"
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, type: 'spring', stiffness: 400, damping: 15 }}
+          >
+            <SanjiCharacter />
+          </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -20,7 +35,7 @@ export default function Contact() {
             transition={{ delay: 0.2 }}
             className="font-display text-5xl text-nika-white mb-2"
           >
-            Let's build something
+            {story.title}
           </motion.h2>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -29,7 +44,7 @@ export default function Contact() {
             transition={{ delay: 0.3 }}
             className="font-display text-5xl text-nika-gold gold-glow mb-4"
           >
-            intelligent together.
+            {story.character} · {story.role}
           </motion.h2>
 
           <motion.p
@@ -39,7 +54,7 @@ export default function Contact() {
             transition={{ delay: 0.4 }}
             className="font-body text-[14px] text-nika-white/60 mt-4 max-w-sm mx-auto"
           >
-            Open to Data Science, ML Engineer, and Data Analyst roles. Based in India · Gurgaon preferred · Remote friendly.
+            {story.blurb}
           </motion.p>
 
           <motion.div

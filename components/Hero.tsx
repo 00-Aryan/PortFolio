@@ -1,12 +1,37 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
+import { LuffyCharacter } from './characters'
+import { sectionStory } from '@/data/story'
 
 export default function Hero() {
   const name = 'Aryan Kumar'
+  const story = sectionStory.hero
+
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  const rotateX = useTransform(mouseY, [-100, 100], [10, -10])
+  const rotateY = useTransform(mouseX, [-100, 100], [-10, 10])
+
+  const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30 })
+  const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 })
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    mouseX.set(e.clientX - centerX)
+    mouseY.set(e.clientY - centerY)
+  }
+
+  const handleMouseLeave = () => {
+    mouseX.set(0)
+    mouseY.set(0)
+  }
 
   return (
-    <section id="hero" className="min-h-screen relative overflow-hidden">
+    <section id="hero" className="min-h-screen relative overflow-hidden scroll-mt-16">
       {/* Background layers */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full bg-[rgba(255,215,0,0.06)] blur-3xl" />
@@ -44,7 +69,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="font-outfit text-[11px] tracking-[0.2em] text-nika-haki-text uppercase mb-4"
           >
-            DATA SCIENCE × IIT MADRAS
+            {story.character} · {story.role}
           </motion.p>
 
           <h1 className="font-display font-extrabold text-[clamp(36px,5vw,72px)] text-nika-white gold-glow mb-6">
@@ -71,7 +96,7 @@ export default function Hero() {
             transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
             className="font-body text-[15px] leading-relaxed max-w-md text-[rgba(250,250,250,0.6)] mb-8"
           >
-            Building intelligent systems at the intersection of NLP, ML Engineering, and human-centred AI.
+            {story.title}. {story.blurb}
           </motion.p>
 
           <motion.div
@@ -113,12 +138,19 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right column - Luffy Gear 5 drum motif */}
+        {/* Right column - Luffy Gear 5 drum motif with parallax */}
         <div className="col-span-5 flex justify-center">
           <motion.div
             className="relative w-64 h-64"
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              rotateX: springRotateX,
+              rotateY: springRotateY,
+              transformStyle: 'preserve-3d',
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
             <svg className="absolute inset-0 w-full h-full" viewBox="0 0 256 256">
               <motion.circle
@@ -156,6 +188,7 @@ export default function Hero() {
               className="absolute inset-0 flex items-center justify-center font-display font-extrabold text-[56px] text-nika-gold gold-glow"
               animate={{ scale: [1, 1.04, 1], rotate: [-1, 1, -1] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ transform: 'translateZ(20px)' }}
             >
               AK
             </motion.span>
@@ -169,7 +202,7 @@ export default function Hero() {
                 <motion.div
                   key={index}
                   className="absolute"
-                  style={{ left: x - 4, top: y - 7 }}
+                  style={{ left: x - 4, top: y - 7, transform: `translateZ(${10 + index * 2}px)` }}
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{
@@ -188,6 +221,16 @@ export default function Hero() {
                 </motion.div>
               )
             })}
+
+            {/* Luffy character icon */}
+            <motion.div
+              className="absolute -bottom-4 -right-4"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 2, type: 'spring', stiffness: 400, damping: 15 }}
+            >
+              <LuffyCharacter />
+            </motion.div>
           </motion.div>
         </div>
       </div>

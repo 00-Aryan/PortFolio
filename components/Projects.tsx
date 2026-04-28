@@ -1,22 +1,40 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import { projects } from '@/data/projects'
+import { ZoroCharacter } from './characters'
+import { sectionStory } from '@/data/story'
 
 export default function Projects() {
+  const story = sectionStory.projects
+
   return (
-    <section id="projects" className="py-20 px-8">
+    <section id="projects" className="py-20 px-8 scroll-mt-16">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="mb-12 relative"
+          className="mb-12 relative flex items-center gap-4"
         >
-          <h2 className="text-3xl font-bold text-nika-white mb-2">Projects</h2>
-          <p className="text-nika-white/60 text-lg">A selection of my recent work</p>
+          <div>
+            <h2 className="text-3xl font-bold text-nika-white mb-2">Projects</h2>
+            <p className="text-nika-white/60 text-lg">{story.character} · {story.role}</p>
+            <p className="text-nika-white/50 text-sm mt-2 max-w-2xl">
+              {story.title}. {story.blurb}
+            </p>
+          </div>
+
+          {/* Zoro character */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 400, damping: 15 }}
+          >
+            <ZoroCharacter />
+          </motion.div>
 
           {/* Robin flower petals */}
           {[0, 72, 144, 216, 288].map((angle, index) => {
@@ -111,12 +129,13 @@ export default function Projects() {
                       Live Demo ↗
                     </motion.a>
                   )}
-                  <Link
+                  <motion.a
                     href={`/projects/${project.slug}`}
-                    className="font-outfit text-[12px] text-nika-white/50 hover:text-nika-gold"
+                    whileHover={{ x: 4, color: '#FFD700' }}
+                    className="font-outfit text-[12px] text-nika-white/50"
                   >
                     About →
-                  </Link>
+                  </motion.a>
                 </div>
               </motion.div>
             ))}
