@@ -1,26 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
+  --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  font-family: 'Inter', sans-serif;
+  background-color: #0D0D0D;
+  color: #FAFAFA;
+  overflow-x: hidden;
+}
+
+/* Hide scrollbar but keep scroll */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0D0D0D; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,215,0,0.3);
+  border-radius: 999px;
+}
+
+/* Glassmorphism card base */
+.glass-card {
+  background: rgba(233,213,255,0.05);
+  border: 1px solid rgba(233,213,255,0.18);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border-radius: 32px;
+  box-shadow: 0 0 40px rgba(255,215,0,0.12), 0 8px 32px rgba(0,0,0,0.6);
+  transition: box-shadow 0.4s var(--transition-smooth),
+              transform 0.4s var(--transition-bounce);
+}
+
+.glass-card:hover {
+  box-shadow: 0 0 72px rgba(255,215,0,0.28), 0 16px 48px rgba(0,0,0,0.7);
+  transform: translateY(-4px) scale(1.012);
+}
+
+/* Gold text glow */
+.gold-glow {
+  text-shadow: 0 0 40px rgba(255,215,0,0.35);
+}
+
+/* Horizontal scroll strip (Research section) */
+.scroll-strip {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 12px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scroll-strip::-webkit-scrollbar { display: none; }
+.scroll-strip > * { scroll-snap-align: start; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
