@@ -1,156 +1,60 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 
-const papers = [
-  {
-    year: '2017',
-    title: 'Attention Is All You Need',
-    authors: 'Vaswani et al.',
-  },
-  {
-    year: '2020',
-    title: 'Language Models are Few-Shot Learners',
-    authors: 'Brown et al.',
-  },
-  {
-    year: '2023',
-    title: 'LLaMA: Open & Efficient Foundation LMs',
-    authors: 'Touvron et al.',
-  },
-  {
-    year: '2022',
-    title: 'Constitutional AI: Harmlessness from AI Feedback',
-    authors: 'Anthropic',
-  },
+const facts = [
+  { label: 'Location', value: 'Jamshedpur / Gurgaon, India' },
+  { label: 'Education', value: 'B.Tech CSE (AI & ML), SRM University' },
+  { label: 'Availability', value: 'Open to internships and entry-level roles' },
+  { label: 'Email', value: '22f2000697@ds.study.iitm.ac.in' },
 ]
 
 export default function About() {
   return (
-    <section id="research" className="py-20 px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-12 gap-8">
-          {/* Left column */}
-          <div className="col-span-7">
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="font-outfit text-[11px] tracking-[0.2em] text-nika-haki-text uppercase mb-4"
-            >
-              PAPERS SHAPING MY THINKING
-            </motion.p>
+    <section id="research" className="bg-[#070707] px-4 py-20 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px]">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="grid overflow-hidden border border-[rgba(232,221,197,0.16)] bg-[#0D0D0D] shadow-[0_20px_70px_rgba(0,0,0,0.45)] lg:grid-cols-[1fr_0.72fr]"
+        >
+          <div className="relative min-h-[360px] border-b border-[rgba(232,221,197,0.16)] lg:border-b-0 lg:border-r">
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,#111_0%,#101010_42%,#E8DDC5_43%,#D9C8AD_100%)]" />
+            <div className="absolute inset-0 opacity-[0.14] [background-image:radial-gradient(#E8DDC5_0.8px,transparent_0.8px)] [background-size:18px_18px]" />
+            <div className="absolute bottom-0 left-[18%] h-[68%] w-[36%] rounded-t-[48%] bg-[#070707] shadow-[0_0_80px_rgba(0,0,0,0.65)]" />
+            <div className="absolute bottom-[26%] left-[12%] h-[32%] w-[58%] rounded-[42px] bg-[#111] opacity-95" />
+            <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-[#070707] to-transparent" />
+            <div className="absolute left-8 top-8 max-w-md">
+              <p className="font-outfit text-[11px] uppercase tracking-[0.24em] text-[#D85A43]">01 / About Me</p>
+              <h2 className="mt-3 font-display text-4xl font-black text-[#E8DDC5]">Data-first builder with product instincts</h2>
+            </div>
+            <div className="absolute bottom-8 left-8 max-w-md border border-[rgba(232,221,197,0.18)] bg-black/35 p-5 backdrop-blur-sm">
+              <p className="font-body text-[13px] leading-relaxed text-[#E8DDC5]/72">
+                I work at the intersection of data science, NLP, automation, and business analytics. My goal is to build systems that are useful, evidence-backed, and strong enough to defend in technical interviews.
+              </p>
+            </div>
+          </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="font-body text-[15px] text-nika-white/65 leading-relaxed mb-6"
-            >
-              Final-year B.S. Data Science student at IIT Madras, actively exploring the boundaries of NLP, transformer architectures, and ML engineering. Currently seeking Data Science and ML Engineer roles.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="scroll-strip mt-6"
-            >
-              {papers.map((paper, index) => (
-                <motion.div
-                  key={index}
-                  className="min-w-[200px] snap-start"
-                  whileHover={{ y: -4, borderColor: '#FFD700' }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                >
-                  <div className="glass-card p-4 rounded-[20px]">
-                    <span className="font-outfit text-[10px] text-nika-gold-dim bg-nika-gold/10 px-2 py-0.5 rounded-full inline-block">
-                      {paper.year}
-                    </span>
-                    <h4 className="font-display text-[13px] text-nika-white leading-snug mt-2 line-clamp-2">
-                      {paper.title}
-                    </h4>
-                    <p className="font-body text-[11px] text-nika-haki-text mt-1">
-                      {paper.authors}
-                    </p>
-                  </div>
-                </motion.div>
+          <div className="bg-[#0D0D0D] p-6 sm:p-8 lg:p-10">
+            <p className="font-outfit text-[11px] uppercase tracking-[0.24em] text-[#B4442E]">Profile Snapshot</p>
+            <div className="mt-6 grid gap-4">
+              {facts.map((fact) => (
+                <div key={fact.label} className="border border-[rgba(232,221,197,0.12)] bg-white/[0.025] p-4">
+                  <p className="font-outfit text-[10px] uppercase tracking-[0.18em] text-[#E8DDC5]/42">{fact.label}</p>
+                  <p className="mt-2 font-body text-[13px] leading-relaxed text-[#E8DDC5]/76">{fact.value}</p>
+                </div>
               ))}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="mt-8"
-            >
-              <Link
-                href="https://www.linkedin.com/in/aryan-kumar-1969b819b/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#0A66C2] text-white rounded-lg font-medium hover:bg-[#004182] transition-colors shadow-sm"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg>
-                Connect on LinkedIn
-              </Link>
-            </motion.div>
+            </div>
+            <div className="mt-6 border border-[#B4442E]/40 bg-[#B4442E]/10 p-5">
+              <p className="font-display text-2xl font-black text-[#E8DDC5]">Discipline in the process, clarity in the impact.</p>
+              <p className="mt-3 font-body text-[13px] leading-relaxed text-[#E8DDC5]/62">
+                The portfolio should signal that I can reason through data, build working systems, document tradeoffs, and keep improving instead of relying on generic AI-generated output.
+              </p>
+            </div>
           </div>
-
-          {/* Right column - Nami's Log Pose visual */}
-          <div className="col-span-5 flex justify-center items-center">
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="animate-nikaFloat"
-            >
-              <svg width="180" height="180" viewBox="0 0 180 180">
-                <rect
-                  x="10"
-                  y="10"
-                  width="160"
-                  height="160"
-                  rx="24"
-                  stroke="rgba(233,213,255,0.2)"
-                  strokeWidth="1"
-                  fill="rgba(233,213,255,0.03)"
-                />
-                <line x1="90" y1="20" x2="90" y2="160" stroke="rgba(255,215,0,0.3)" strokeWidth="1" />
-                <line x1="20" y1="90" x2="160" y2="90" stroke="rgba(255,215,0,0.3)" strokeWidth="1" />
-                <motion.line
-                  x1="90"
-                  y1="90"
-                  x2="90"
-                  y2="40"
-                  stroke="#FFD700"
-                  strokeWidth="2"
-                  animate={{ rotate: [-15, 15, -15] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                  style={{ originX: '50%', originY: '50%' }}
-                />
-                <circle cx="90" cy="90" r="4" fill="#FFD700" />
-                <text x="25" y="30" className="font-outfit text-[9px] text-nika-haki-text" fill="rgba(233,213,255,0.6)">
-                  NLP
-                </text>
-                <text x="25" y="165" className="font-outfit text-[9px] text-nika-haki-text" fill="rgba(233,213,255,0.6)">
-                  ML
-                </text>
-                <text x="145" y="30" className="font-outfit text-[9px] text-nika-haki-text" fill="rgba(233,213,255,0.6)">
-                  DS
-                </text>
-                <text x="145" y="165" className="font-outfit text-[9px] text-nika-haki-text" fill="rgba(233,213,255,0.6)">
-                  AI
-                </text>
-              </svg>
-            </motion.div>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
