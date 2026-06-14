@@ -2,136 +2,129 @@
 
 import { motion } from 'framer-motion'
 
-const skillCategories = [
+const capabilityGroups = [
   {
-    title: 'NLP & Language Models',
+    title: 'Data Science Core',
+    claim: 'Used across analysis, modeling, and project write-ups',
     skills: [
-      { name: 'spaCy', level: 'Advanced' },
-      { name: 'DistilBERT', level: 'Intermediate' },
-      { name: 'BPE Tokenizer', level: 'Advanced' },
-      { name: 'scispaCy', level: 'Intermediate' },
+      { name: 'Python', evidence: 'Primary language across ML, NLP, scraping, and automation projects' },
+      { name: 'Pandas / NumPy', evidence: 'EDA, feature engineering, cleaning, and business analytics workflows' },
+      { name: 'Scikit-learn', evidence: 'Pipelines, preprocessing, model comparison, and evaluation' },
+      { name: 'Matplotlib', evidence: 'EDA plots, business analytics charts, and model interpretation visuals' },
     ],
   },
   {
-    title: 'ML Engineering',
+    title: 'Machine Learning',
+    claim: 'Practical modeling experience with evaluation and tradeoff reasoning',
     skills: [
-      { name: 'scikit-learn', level: 'Advanced' },
-      { name: 'PyTorch', level: 'Intermediate' },
-      { name: 'XGBoost', level: 'Advanced' },
-      { name: 'Framer Motion', level: 'Intermediate' },
+      { name: 'LightGBM / XGBoost', evidence: 'Engage2Value regression modeling and model comparison' },
+      { name: 'Feature Engineering', evidence: 'Leakage-safe user-history, categorical grouping, datetime, and behavior features' },
+      { name: 'Recommender Systems', evidence: 'MovieLens CF, SVD, cold-start fallback, Precision@K and Recall@K' },
+      { name: 'Model Evaluation', evidence: 'R2, RMSE, MAE, Precision@K, Recall@K, and business metric interpretation' },
     ],
   },
   {
-    title: 'Data & Analytics',
+    title: 'NLP and Document AI',
+    claim: 'Focused on extraction, structure, and grounded outputs',
     skills: [
-      { name: 'pandas', level: 'Advanced' },
-      { name: 'SQL', level: 'Intermediate' },
-      { name: 'NumPy', level: 'Advanced' },
-      { name: 'Matplotlib', level: 'Advanced' },
+      { name: 'spaCy / scispaCy', evidence: 'Clinical entity extraction and medical text processing' },
+      { name: 'Transformers', evidence: 'Classification and text understanding workflows' },
+      { name: 'OCR / PDF Parsing', evidence: 'TenderIQ PDF extraction, OCR fallback, and document chunking' },
+      { name: 'Embeddings / Vector Search', evidence: 'Tender Q&A and document retrieval architecture' },
     ],
   },
   {
-    title: 'Dev & Tools',
+    title: 'Engineering and Automation',
+    claim: 'Built systems that run beyond notebooks',
     skills: [
-      { name: 'Python', level: 'Advanced' },
-      { name: 'Git', level: 'Advanced' },
-      { name: 'Next.js', level: 'Intermediate' },
-      { name: 'Docker', level: 'Beginner' },
+      { name: 'FastAPI / Flask', evidence: 'Backend APIs for product systems and platform projects' },
+      { name: 'Streamlit', evidence: 'Operator consoles and AI assistant demos' },
+      { name: 'GitHub Actions', evidence: 'Automation, scheduled jobs, and project workflow support' },
+      { name: 'Testing Discipline', evidence: 'Content pipeline reports 249 passing tests and production readiness checks' },
     ],
   },
 ]
 
-const getLevelWidth = (level: string): number => {
-  switch (level) {
-    case 'Advanced':
-      return 90
-    case 'Intermediate':
-      return 60
-    case 'Beginner':
-      return 30
-    default:
-      return 50
-  }
-}
-
-const getLevelColor = (level: string): string => {
-  switch (level) {
-    case 'Advanced':
-      return 'text-nika-gold'
-    case 'Intermediate':
-      return 'text-nika-haki-text'
-    case 'Beginner':
-      return 'text-nika-white/40'
-    default:
-      return 'text-nika-white/50'
-  }
-}
+const proofCards = [
+  { label: 'ML proof', value: '116K+', detail: 'E-commerce sessions modeled in Engage2Value' },
+  { label: 'Business proof', value: '50 days', detail: 'Field data collected for bakery analytics' },
+  { label: 'System proof', value: '249', detail: 'Passing tests reported for content automation pipeline' },
+  { label: 'Product proof', value: '10', detail: 'Portfolio case files connected to exact GitHub repos' },
+]
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-20 px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="skills" className="py-20 px-4 sm:px-8">
+      <div className="mx-auto max-w-7xl">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="mb-12"
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="mb-10 grid gap-6 border-b border-nika-haki-border pb-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end"
         >
-          <h2 className="text-3xl font-bold text-nika-white mb-2">Skills</h2>
-          <p className="text-nika-white/60 text-lg">Technologies I work with</p>
+          <div>
+            <p className="font-outfit text-[11px] uppercase tracking-[0.24em] text-[#B4442E]">03 / Technical Arsenal</p>
+            <h2 className="mt-2 font-display text-3xl font-black text-nika-white md:text-4xl">Skills tied to evidence</h2>
+          </div>
+          <p className="font-body text-[13px] leading-relaxed text-nika-white/55">
+            This section avoids exaggerated skill meters. Recruiters should see where each capability appears in real projects and what claim is safe to defend in an interview.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {skillCategories.map((category, categoryIndex) => (
-            <motion.div
-              key={category.title}
-              className="glass-card p-6"
-              whileInView={{ opacity: 1, x: 0 }}
-              initial={{ opacity: 0, x: categoryIndex % 2 === 0 ? -40 : 40 }}
-              viewport={{ once: true }}
-              transition={{
-                type: 'spring',
-                stiffness: 180,
-                damping: 16,
-                delay: categoryIndex * 0.15,
-              }}
-            >
-              <h3 className="font-outfit text-[11px] tracking-widest uppercase text-nika-gold mb-4">
-                {category.title}
-              </h3>
+        <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
+          <div className="grid gap-5 md:grid-cols-2">
+            {capabilityGroups.map((group, groupIndex) => (
+              <motion.article
+                key={group.title}
+                className="rounded-[24px] border border-nika-haki-border bg-[#111111] p-6 shadow-[0_16px_50px_rgba(0,0,0,0.28)]"
+                initial={{ opacity: 0, y: 26 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: groupIndex * 0.08, ease: 'easeOut' }}
+              >
+                <div className="mb-5 border-b border-nika-haki-border pb-4">
+                  <h3 className="font-display text-xl font-bold text-nika-white">{group.title}</h3>
+                  <p className="mt-2 font-body text-[12px] leading-relaxed text-nika-white/45">{group.claim}</p>
+                </div>
 
-              <div className="space-y-4">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between mb-1">
-                      <span className="font-body text-[13px] text-nika-white">
-                        {skill.name}
-                      </span>
-                      <span className={`font-body text-[11px] ${getLevelColor(skill.level)}`}>
-                        {skill.level}
-                      </span>
+                <div className="space-y-4">
+                  {group.skills.map((skill) => (
+                    <div key={skill.name} className="grid grid-cols-[120px_1fr] gap-4 border-b border-white/[0.06] pb-4 last:border-0 last:pb-0">
+                      <p className="font-outfit text-[12px] font-semibold text-nika-white">{skill.name}</p>
+                      <p className="font-body text-[12px] leading-relaxed text-nika-white/55">{skill.evidence}</p>
                     </div>
-                    <div className="h-1 bg-nika-white/10 rounded-full">
-                      <motion.div
-                        className="h-full bg-gradient-to-r from-nika-gold to-nika-gold/50 rounded-full"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${getLevelWidth(skill.level)}%` }}
-                        viewport={{ once: true }}
-                        transition={{
-                          duration: 1.2,
-                          delay: skillIndex * 0.1,
-                          type: 'spring',
-                          stiffness: 80,
-                          damping: 20,
-                        }}
-                      />
-                    </div>
+                  ))}
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          <motion.aside
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+            className="rounded-[24px] border border-nika-haki-border bg-[#E8DDC5] p-6 text-[#15110D] shadow-[0_16px_50px_rgba(0,0,0,0.28)]"
+          >
+            <p className="font-outfit text-[11px] uppercase tracking-[0.24em] text-[#8F3325]">Recruiter View</p>
+            <h3 className="mt-2 font-display text-2xl font-black">What this section should prove</h3>
+            <p className="mt-4 font-body text-[13px] leading-relaxed text-[#15110D]/70">
+              The goal is not to look expert in every tool. The goal is to show a credible stack, mapped to projects, with enough proof for a recruiter to continue into the case files.
+            </p>
+
+            <div className="mt-6 grid gap-3">
+              {proofCards.map((card) => (
+                <div key={card.label} className="border border-[#15110D]/15 bg-[#15110D]/[0.03] p-4">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <p className="font-outfit text-[10px] uppercase tracking-[0.2em] text-[#15110D]/45">{card.label}</p>
+                    <p className="font-display text-2xl font-black text-[#9E3428]">{card.value}</p>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+                  <p className="mt-2 font-body text-[12px] leading-relaxed text-[#15110D]/70">{card.detail}</p>
+                </div>
+              ))}
+            </div>
+          </motion.aside>
         </div>
       </div>
     </section>
